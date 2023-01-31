@@ -1,0 +1,7 @@
+g++ -o Project1 Project1.cpp
+
+run:
+./Project1
+
+run with input file:
+Get-Content input1.txt | .\Project1
