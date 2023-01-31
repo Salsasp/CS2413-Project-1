@@ -62,6 +62,44 @@ int* sort(int* toSort, int maxValues)
     return B;
 }
 
+void readSection()
+{
+    char operation;
+    int size;
+    int* currentOp;
+    cin >> operation;
+    cin >> size;
+       switch (operation)
+    {
+    case 'F':
+        findQueries = new int[size];
+        currentOp = findQueries;
+        break;
+    case 'A':
+        sumPairQueries = new int[size];
+        currentOp = sumPairQueries;
+        break;
+    case 'R':
+        removeOperations = new int[size];
+        currentOp = removeOperations;
+        break;
+    case 'I':
+        insertionOperations = new int[size];
+        currentOp = insertionOperations;
+        break;
+    default:
+        break;
+    }
+    for(int i = 0; i < size; i++)
+    {
+        cin >> currentOp[i];
+        cout << currentOp[i];
+        cout << " ";
+    }
+    cout << endl;
+ 
+}
+
 int main()
 {
     int maxValues; // max number of values to store / length of the arrays
@@ -70,13 +108,12 @@ int main()
     cin >> maxValues; // read the maximum number of values from the redirected input file
     cout << "Length of the array: " << maxValues << endl;
 
-    // TODO create a dynamic array A of size maxValues
-    A = new int[maxValues];
+    A = new int[maxValues];//dynamic array containing unsorted values
     //REMEMBER TO DISPOSE OF DYNAMIC ARRAY AFTER USAGE!!
     //statically defined arrays do not need to be deleted
     //delete [] name
 
-    // TODO read in the number from the redirected input
+    //read in the number from the redirected input
     for (int i = 0; i < maxValues; i++)
     {
         cin >> tempVal;
@@ -86,22 +123,30 @@ int main()
     }
     cout<<'\n';
 
-// TODO display the values in array A
+    // sort the array A and store it in B
+    B = sort(A, maxValues);
 
-// TODO sort the array A and store it in B - any sorting algorithm can be used
-B = sort(A, maxValues);
+    readSection(); //TODO: fix array references between scope of global and method
+    readSection();
 
-//test code to check values of B
-for (int i = 0; i < maxValues; i++)
+    //test code to check values of B
+    /*
+    for (int i = 0; i < maxValues; i++)
     {
         cout << B[i];
         cout << " ";
     }
-// TODO read the commands/options till the end of the file
-// 
-// TODO delete all the dynamically created arrays
+    */
+    // TODO read the commands/options till the end of the file
+    
+
+    // TODO delete all the dynamically created arrays
     delete [] A;
     delete [] B;
+    delete [] insertionOperations;
+    delete [] sumPairQueries;
+    delete [] removeOperations;
+    delete [] findQueries;
 
     return 0;
 }
