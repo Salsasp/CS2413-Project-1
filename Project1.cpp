@@ -8,9 +8,13 @@ using namespace std;
 int* A;
 int* B;
 int* findQueries;
+int fsize;
 int* sumPairQueries;
+int asize;
 int* removeOperations;
+int rsize;
 int* insertionOperations;
+int isize;
 
 int findElement(int* array, int target)
 {
@@ -109,9 +113,6 @@ int main()
     cout << "Length of the array: " << maxValues << endl;
 
     A = new int[maxValues];//dynamic array containing unsorted values
-    //REMEMBER TO DISPOSE OF DYNAMIC ARRAY AFTER USAGE!!
-    //statically defined arrays do not need to be deleted
-    //delete [] name
 
     //read in the number from the redirected input
     for (int i = 0; i < maxValues; i++)
@@ -122,25 +123,52 @@ int main()
         cout << " ";
     }
     cout<<'\n';
-
+   
     // sort the array A and store it in B
     B = sort(A, maxValues);
 
-    readSection(); //TODO: fix array references between scope of global and method
-    readSection();
-
-    //test code to check values of B
-    /*
-    for (int i = 0; i < maxValues; i++)
+    //this for loop reads in all operation data
+    char operation;
+    int size;
+    int* currentOp;
+    for(int i = 0; i < 4; i++)
     {
-        cout << B[i];
-        cout << " ";
+    cin >> operation;
+    cin >> size;
+       switch (operation)
+        {
+        case 'F':
+            findQueries = new int[size];
+            currentOp = findQueries;
+            fsize = size;
+            break;
+        case 'A':
+            sumPairQueries = new int[size];
+            currentOp = sumPairQueries;
+            asize = size;
+            break;
+        case 'R':
+            removeOperations = new int[size];
+            currentOp = removeOperations;
+            rsize = size;
+            break;
+        case 'I':
+            insertionOperations = new int[size];
+            currentOp = insertionOperations;
+            isize = size;
+            break;
+        default:
+            break;
+        }
+        for(int i = 0; i < size; i++)
+        {
+            cin >> currentOp[i];
+           cout << currentOp[i];
+           cout << " ";
+        }
+        cout << endl;
     }
-    */
-    // TODO read the commands/options till the end of the file
-    
-
-    // TODO delete all the dynamically created arrays
+    //delete all arrays to clear memory
     delete [] A;
     delete [] B;
     delete [] insertionOperations;
