@@ -85,44 +85,6 @@ int* sort(int* toSort, int maxValues)
     return B;
 }
 
-void readSection()
-{
-    char operation;
-    int size;
-    int* currentOp;
-    cin >> operation;
-    cin >> size;
-       switch (operation)
-    {
-    case 'F':
-        findQueries = new int[size];
-        currentOp = findQueries;
-        break;
-    case 'A':
-        sumPairQueries = new int[size];
-        currentOp = sumPairQueries;
-        break;
-    case 'R':
-        removeOperations = new int[size];
-        currentOp = removeOperations;
-        break;
-    case 'I':
-        insertionOperations = new int[size];
-        currentOp = insertionOperations;
-        break;
-    default:
-        break;
-    }
-    for(int i = 0; i < size; i++)
-    {
-        cin >> currentOp[i];
-        cout << currentOp[i];
-        cout << " ";
-    }
-    cout << endl;
- 
-}
-
 int main()
 {
     int maxValues; // max number of values to store / length of the arrays
