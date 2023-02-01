@@ -16,10 +16,29 @@ int rsize;
 int* insertionOperations;
 int isize;
 
-int findElement(int* array, int target)
+int linearSearch(int* array, int target)
 {
     //TODO: finish this method
     return 0;
+}
+
+int binarySearch(int* array, int upper, int lower, int target)
+{
+    //base case
+    if(lower > upper)
+    {
+        return -1;
+    }
+    int middle = (upper+lower)/2;
+    //if target is found
+    if(array[middle] == target)
+        return middle;
+    //if the target is in the upper half of the array, recur function
+    if(target > array[middle])
+        return binarySearch(array, upper, middle+1, target);
+    //if the target is in the lower half of the array, recur function
+    else if(target < array[middle])
+        return binarySearch(array, middle-1, lower, target);
 }
 
 int* sumPairs(int target)
@@ -119,13 +138,16 @@ int main()
     {
         cin >> tempVal;
         A[i] = tempVal;
-        cout << A[i];
-        cout << " ";
     }
-    cout<<'\n';
    
     // sort the array A and store it in B
     B = sort(A, maxValues);
+    for(int i = 0; i < maxValues; i++)
+    {
+        cout << B[i];
+        cout << " ";
+    }
+    cout<<'\n';
 
     //this for loop reads in all operation data
     char operation;
@@ -163,11 +185,15 @@ int main()
         for(int i = 0; i < size; i++)
         {
             cin >> currentOp[i];
-           cout << currentOp[i];
-           cout << " ";
         }
-        cout << endl;
     }
+
+    cout<<"Binary searches: "<<'\n';
+    for(int i = 0; i < fsize; i++)
+    {
+       cout << binarySearch(B, maxValues, 0, findQueries[i]) << " ";
+    }
+
     //delete all arrays to clear memory
     delete [] A;
     delete [] B;
