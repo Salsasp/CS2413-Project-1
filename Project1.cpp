@@ -16,10 +16,16 @@ int rsize;
 int* insertionOperations;
 int isize;
 
-int linearSearch(int* array, int target)
+int linearSearch(int* array, int target, int size)
 {
-    //TODO: finish this method
-    return 0;
+    for(int i = 0; i < size; i++)
+    {
+        if(array[i] == target)
+        {
+            return i;
+        }
+    }
+    return -1;
 }
 
 int binarySearch(int* array, int upper, int lower, int target)
@@ -41,9 +47,25 @@ int binarySearch(int* array, int upper, int lower, int target)
         return binarySearch(array, middle-1, lower, target);
 }
 
-int* sumPairs(int target)
+int* sumPairs(int*array, int target, int size)
 {
-    //TODO: finish this method
+    static int pair[2];
+    int val1;
+    int val2;
+    for(int i = 0; i < size; i++)
+    {
+        val1 = array[i];
+        for(int j = i+1; j < size; j++)
+        {
+            val2 = array[j];
+            if(val1 + val2 == target)
+            {
+                pair[0] = val1;
+                pair[1] = val2;
+                return pair;
+            }
+        }
+    }
     return NULL;
 }
 
@@ -154,6 +176,12 @@ int main()
     for(int i = 0; i < fsize; i++)
     {
        cout << binarySearch(B, maxValues, 0, findQueries[i]) << " ";
+    }
+    cout<<'\n'<<"Sum Pair Queries: "<<'\n';
+    for(int i = 0; i < asize; i++)
+    {
+        int* pair = sumPairs(B, sumPairQueries[i], maxValues);
+        cout << pair[0]<<" + "<<pair[1]<<", ";
     }
 
     //delete all arrays to clear memory
