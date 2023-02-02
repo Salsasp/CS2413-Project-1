@@ -6,7 +6,9 @@
 using namespace std;
 
 int* A;
+int ASize;
 int* B;
+int BSize;
 int* findQueries;
 int fsize;
 int* sumPairQueries;
@@ -69,10 +71,24 @@ int* sumPairs(int*array, int target, int size)
     return NULL;
 }
 
-int* removeElement(int target)
+int removeElement(int* array, int target, int size, char arrName)
 {
-    //TODO: finish this method
-    return NULL;
+    
+    for(int i = 0; i < size; i++)
+    {
+        if(array[i] == target)
+        {
+            if(arrName == 'A')
+                ASize -= 1;
+            else BSize -= 1;
+            for(int j = i; j < size; j++)
+            {
+                array[j] = array[j+1];
+            }
+            return i;
+        }
+    }
+    return -1;
 }
 
 int* insertElement(int toInsert)
@@ -113,6 +129,8 @@ int main()
     int currentValues; // as we add, the number of values in the arrays
     int tempVal; // variable used to read the number 
     cin >> maxValues; // read the maximum number of values from the redirected input file
+    ASize = maxValues;
+    BSize = maxValues;
     cout << "Length of the array: " << maxValues << endl;
 
     A = new int[maxValues];//dynamic array containing unsorted values
@@ -123,15 +141,21 @@ int main()
         cin >> tempVal;
         A[i] = tempVal;
     }
-   
+    cout<<"Array A: ";
+    for(int i = 0; i < maxValues; i++)
+    {
+        cout << A[i] << " ";
+    }
+    cout << '\n';
     // sort the array A and store it in B
     B = sort(A, maxValues);
+    cout<<"Array B: ";
     for(int i = 0; i < maxValues; i++)
     {
         cout << B[i];
         cout << " ";
     }
-    cout<<'\n';
+    cout<<'\n'<<'\n';
 
     //this for loop reads in all operation data
     char operation;
@@ -171,19 +195,68 @@ int main()
             cin >> currentOp[i];
         }
     }
-
-    cout<<"Binary searches: "<<'\n';
+/**************************************************************************************************************************************/
+//output section
+    cout<<"Find: "<<'\n';
     for(int i = 0; i < fsize; i++)
     {
-       cout << binarySearch(B, maxValues, 0, findQueries[i]) << " ";
+        if(binarySearch(B, maxValues, 0, findQueries[i]) != -1)
+            cout<<"Element "<< findQueries[i] << "  found at " << binarySearch(B, maxValues, 0, findQueries[i]) << " in B" << '\n';
+        else cout<<"Element "<< findQueries[i] << "  not found in B" << '\n';
     }
-    cout<<'\n'<<"Sum Pair Queries: "<<'\n';
+    cout<<'\n';
+    for(int i = 0; i < fsize; i++)
+    {
+        if(linearSearch(A, findQueries[i], maxValues) != -1)
+            cout<<"Element "<< findQueries[i] << "  found at " << linearSearch(A, findQueries[i], maxValues) << " in A" << '\n';
+        else cout<<"Element "<< findQueries[i] << "  not found in A" << '\n';
+    }
+    cout<<'\n'<<"SumPairs: "<<'\n';
+    cout<<"B:"<<'\n';
     for(int i = 0; i < asize; i++)
     {
         int* pair = sumPairs(B, sumPairQueries[i], maxValues);
-        cout << pair[0]<<" + "<<pair[1]<<", ";
+        cout << sumPairQueries[i] << '\n';
+        if(pair != NULL)
+            cout << " = " << pair[0]<<" + "<<pair[1]<<'\n';
     }
-
+    cout << '\n';
+    cout<<"A:"<<'\n';
+    for(int i = 0; i < asize; i++)
+    {
+        int* pair = sumPairs(A, sumPairQueries[i], maxValues);
+        cout << sumPairQueries[i] << '\n';
+        if(pair != NULL)
+            cout << " = " << pair[0]<<" + "<<pair[1]<<'\n';
+    }
+    cout << '\n';
+    cout<<"Remove: "<<'\n';
+    for(int i = 0; i < rsize; i++)
+    {
+        int index = removeElement(B, removeOperations[i], maxValues, 'B');
+        if(index != -1)
+            cout<<"Removing " << removeOperations[i] << " at " << index << " in " << "B" << '\n';
+        else cout << "Element " << removeOperations[i] << " not found in " << "B" << '\n';
+    }
+    cout << '\n';
+    for(int i = 0; i < rsize; i++)
+    {
+        int index = removeElement(A, removeOperations[i], maxValues, 'A');
+        if(index != -1)
+            cout<<"Removing " << removeOperations[i] << " at " << index << " in " << "A" << '\n';
+        else cout << "Element " << removeOperations[i] << " not found in " << "A" << '\n';
+    }
+    cout << '\n';
+    cout << "After removal Array A: ";
+    for(int i = 0; i < ASize; i++)
+    {
+        cout<<A[i]<<" ";
+    }
+    cout << '\n' << "After removal Array B: ";
+    for(int i = 0; i < BSize; i++)
+    {
+        cout<<B[i]<<" ";
+    }
     //delete all arrays to clear memory
     delete [] A;
     delete [] B;
