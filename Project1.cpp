@@ -22,9 +22,9 @@ int isize;
 //linear search function for unsorted arrays
 int linearSearch(int* array, int target, int size)
 {
-    for(int i = 0; i < size; i++)
+    for(int i = 0; i < size; i++) //loop through all elements of array
     {
-        if(array[i] == target)
+        if(array[i] == target) // check if element is equal to target
         {
             return i;
         }
@@ -35,20 +35,19 @@ int linearSearch(int* array, int target, int size)
 //recursive binarySearch function for sorted arrays
 int binarySearch(int* array, int upper, int lower, int target)
 {
-    //base case
+    //base case for recursion
     if(lower > upper)
     {
         return -1;
     }
     int middle = (upper+lower)/2;
-    //if target is found
-    if(array[middle] == target)
+    if(array[middle] == target)//if target is found
         return middle;
-    //if the target is in the upper half of the array, recur function
-    if(target > array[middle])
+
+    if(target > array[middle])//if the target is in the upper half of the array, recur function
         return binarySearch(array, upper, middle+1, target);
-    //if the target is in the lower half of the array, recur function
-    else if(target < array[middle])
+
+    else if(target < array[middle])//if the target is in the lower half of the array, recur function
         return binarySearch(array, middle-1, lower, target);
     return -1;
 }
@@ -57,16 +56,16 @@ int binarySearch(int* array, int upper, int lower, int target)
 int* sumPairs(int*array, int target, int size)
 {
     static int pair[2]; //int array to store pair values
-    int val1;
-    int val2;
+    int val1; //value for pair
+    int val2; //value for pair
     //nested for loop that checks each element's sum with other elements
     for(int i = 0; i < size; i++)
     {
-        val1 = array[i];
+        val1 = array[i]; //set val1 = array[i] to compare it with other elements
         for(int j = i+1; j < size; j++)
         {
             val2 = array[j];
-            if(val1 + val2 == target)
+            if(val1 + val2 == target) //if 2 values add up to the target, create and return pair
             {
                 pair[0] = val1;
                 pair[1] = val2;
@@ -81,14 +80,14 @@ int* sumPairs(int*array, int target, int size)
 int removeElement(int* array, int target, int size, char arrName)
 {
     
-    for(int i = 0; i < size; i++)
+    for(int i = 0; i < size; i++)//loop through array
     {
-        if(array[i] == target)
+        if(array[i] == target)//find the exact index of target
         {
-            if(arrName == 'A')
+            if(arrName == 'A') //check which array is being modified
                 ASize -= 1;
             else BSize -= 1;
-            for(int j = i; j < size-1; j++)
+            for(int j = i; j < size-1; j++)//inner for loop to shift remaining elements
             {
                 array[j] = array[j+1];
             }
@@ -122,28 +121,28 @@ void insertElement(int toInsert, int size, int *array)
 //function that utilizes the bubblesort algorithm to sort array data
 int* sort(int* toSort, int maxValues)
 {
-    int* B = new int[maxValues]; //create dynamic array B
+    int* toReturn = new int[maxValues]; //create dynamic array to copy values into
     //loop to copy values of toSort(A) into B
     for(int i = 0; i < maxValues; i++)
     {
-        B[i] = toSort[i];
+        toReturn[i] = toSort[i];
     }
 
     //bubblesort algorithm to sort array
     //code inspiration derived from
     //https://www.softwaretestinghelp.com/bubble-sort/#:~:text=Bubble%20Sort%20Technique%20In%20C,%5B2%5D%20and%20so%20on.
     int temp;
-    for(int i = 0; i<maxValues; i++) {
-        for(int j = i+1; j<maxValues; j++)
+    for(int i = 0; i<maxValues; i++) { //outer loop that goes through all array elements
+        for(int j = i+1; j<maxValues; j++)//inner loop that loops through all elements above i
         {
-            if(B[j] < B[i]) {
-            temp = B[i];
-            B[i] = B[j];
-            B[j] = temp;
+            if(toReturn[j] < toReturn[i]) { //if an element further in the array is less than a lower element
+            temp = toReturn[i]; //store in temp variable
+            toReturn[i] = toReturn[j]; //swap element positions
+            toReturn[j] = temp; //overwrite with temp
             }
         }
     }
-    return B;
+    return toReturn;
 }
 
 int main()
@@ -182,9 +181,9 @@ int main()
     cout<<'\n'<<'\n';
 
     //this for loop reads in all operation data
-    char operation;
-    int size;
-    int* currentOp;
+    char operation; //character representing operation
+    int size; //amount of elements for a given operation
+    int* currentOp; //array pointer
     for(int i = 0; i < 4; i++)
     {
     cin >> operation;
@@ -221,8 +220,8 @@ int main()
     }
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //output section
-//output for search queries
 
+//output for search queries
     cout<<"Find: "<<'\n';
     for(int i = 0; i < fsize; i++)
     {
