@@ -81,7 +81,7 @@ int removeElement(int* array, int target, int size, char arrName)
             if(arrName == 'A')
                 ASize -= 1;
             else BSize -= 1;
-            for(int j = i; j < size; j++)
+            for(int j = i; j < size-1; j++)
             {
                 array[j] = array[j+1];
             }
@@ -91,10 +91,23 @@ int removeElement(int* array, int target, int size, char arrName)
     return -1;
 }
 
-int* insertElement(int toInsert)
+void insertElement(int toInsert, int size, int *array)
 {
-    //TODO: finish this method
-    return NULL;
+    //check whether array being operated on is A or B
+    if(array == A)
+    {
+        array[ASize] = toInsert;
+        ASize++;
+        return;
+    }
+    int i;
+    //decrementing array that shifts all elements greater than target to the right
+    for(i = BSize-1; i >=0 && array[i] > toInsert; i--)
+    {
+        array[i+1] = array[i];
+    }
+    array[i+1] = toInsert;
+    BSize++;
 }
 
 int* sort(int* toSort, int maxValues)
@@ -197,6 +210,7 @@ int main()
     }
 /**************************************************************************************************************************************/
 //output section
+//output for search queries
     cout<<"Find: "<<'\n';
     for(int i = 0; i < fsize; i++)
     {
@@ -211,6 +225,8 @@ int main()
             cout<<"Element "<< findQueries[i] << "  found at " << linearSearch(A, findQueries[i], maxValues) << " in A" << '\n';
         else cout<<"Element "<< findQueries[i] << "  not found in A" << '\n';
     }
+
+    //output for sumpair queries
     cout<<'\n'<<"SumPairs: "<<'\n';
     cout<<"B:"<<'\n';
     for(int i = 0; i < asize; i++)
@@ -229,6 +245,8 @@ int main()
         if(pair != NULL)
             cout << " = " << pair[0]<<" + "<<pair[1]<<'\n';
     }
+
+    //output for removal operations
     cout << '\n';
     cout<<"Remove: "<<'\n';
     for(int i = 0; i < rsize; i++)
@@ -257,6 +275,33 @@ int main()
     {
         cout<<B[i]<<" ";
     }
+    cout<<'\n'<<'\n'<<"Insert:"<<'\n';
+    //output for insertion operations
+    for(int i = 0; i < isize; i++)
+    {
+        insertElement(insertionOperations[i], BSize, B);
+        cout<<"Inserting " << insertionOperations[i] << " in B";
+        cout<<'\n';
+    }
+    cout<<'\n';
+    for(int i = 0; i < isize; i++)
+    {
+        insertElement(insertionOperations[i], ASize, A);
+        cout<<"Inserting " << insertionOperations[i] << " in A";
+        cout<<'\n';
+    }
+    cout << '\n' << "After insertions Array A: ";
+    for(int i = 0; i < ASize; i++)
+    {
+        cout<<A[i] << " ";
+    }
+    cout<<'\n'<< "After insertions Array B: ";
+    for(int i = 0; i < BSize; i++)
+    {
+        cout<<B[i] << " ";
+    }
+
+
     //delete all arrays to clear memory
     delete [] A;
     delete [] B;
